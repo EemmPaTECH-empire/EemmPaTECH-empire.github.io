@@ -1,0 +1,127 @@
+/* === Global Styles === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(135deg, #000000, #0a0f24, #007bff, #00ff99, #ffcc00);
+  color: white;
+  min-height: 100vh;
+}
+
+/* === Header === */
+header {
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid #00ff99;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffcc00;
+  letter-spacing: 2px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #00ff99;
+  margin: 0 15px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #ff6600;
+}
+
+/* === Hero Section === */
+.hero {
+  text-align: center;
+  padding: 120px 20px;
+  background: linear-gradient(120deg, #000, #007bff, #ff6600, #00ff99);
+  background-size: 400% 400%;
+  animation: gradientMove 10s ease infinite;
+  border-bottom: 5px solid #ffcc00;
+}
+
+.hero h2 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: white;
+}
+
+.hero p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #f2f2f2;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* === Services Section === */
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding: 60px 40px;
+  background: white;
+  color: #000;
+}
+
+.service-card {
+  background: linear-gradient(145deg, #ffffff, #f3f3f3);
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  padding: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+.service-card h3 {
+  font-size: 1.5rem;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.service-card p {
+  color: #333;
+  font-size: 1rem;
+}
+
+/* === Footer === */
+footer {
+  background: #000;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-top: 3px solid #00ff99;
+}
+
+footer a {
+  color: #00ff99;
+  text-decoration: none;
+  margin: 0 10px;
+  transition: 0.3s;
+}
+
+footer a:hover {
+  color: #ff6600;
+}
