@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About — EemmPaTECH Empire</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="icon" href="/assets/logo.png" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="/assets/logo.png" alt="logo">
+        <h1>EemmPaTECH Empire</h1>
+      </div>
+      <nav class="nav">
+        <a href="/">Home</a><a href="/about/">About</a><a href="/services/">Services</a><a href="/news/">Tech News</a><a href="/contact/">Contact</a>
+      </nav>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/share/16E2cDZkqj/" class="facebook" target="_blank">f</a>
+        <a href="https://www.instagram.com/eemmpatec?igsh=MWpsYWhzcHFxMW9ibw==" class="instagram" target="_blank">i</a>
+        <a href="https://x.com/EmmaPauly33100?s=09" class="twitter" target="_blank">x</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container section">
+    <h2>About Us</h2>
+    <div class="card">
+      <p>EemmPaTECH Empire is a creative & tech services studio focused on graphics, photo & video editing, ad creation and technology news. We deliver fast, polished assets for creators and businesses.</p>
+      <p>Founded by Emma — inspired to combine design and product-grade tech to help small businesses scale.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© EemmPaTECH Empire</p>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/share/16E2cDZkqj/" class="facebook" target="_blank">f</a>
+        <a href="https://www.instagram.com/eemmpatec?igsh=MWpsYWhzcHFxMW9ibw==" class="instagram" target="_blank">i</a>
+        <a href="https://x.com/EmmaPauly33100?s=09" class="twitter" target="_blank">x</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
