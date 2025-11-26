@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EemmPaTECH Empire</title>
+  <meta name="description" content="EemmPaTECH Empire — graphics, photo & video editing, ad creation, tech news." />
+  <link rel="icon" href="/assets/logo.png" />
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="/assets/logo.png" alt="EemmPaTECH Empire logo">
+        <h1>EemmPaTECH Empire</h1>
+      </div>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/about/">About</a>
+        <a href="/services/">Services</a>
+        <a href="/news/">Tech News</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+
+      <div class="social-icons">
+        <a href="https://www.facebook.com/share/16E2cDZkqj/" class="facebook" target="_blank" aria-label="Facebook">f</a>
+        <a href="https://www.instagram.com/eemmpatec?igsh=MWpsYWhzcHFxMW9ibw==" class="instagram" target="_blank" aria-label="Instagram">i</a>
+        <a href="https://x.com/EmmaPauly33100?s=09" class="twitter" target="_blank" aria-label="Twitter/X">x</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <div class="hero-card">
+          <h2>Creativity meets Technology</h2>
+          <p>We make eye-catching graphics, pro photo & video edits, high-conversion ads, and publish curated tech news — fast, reliable, and ready to scale.</p>
+          <p style="margin-top:12px"><a class="btn" href="/contact/">Get a Quote</a></p>
+        </div>
+      </div>
+
+      <aside style="background:#fff;padding:20px;border-radius:12px;">
+        <h3 style="margin-top:0">Featured Services</h3>
+        <ul style="color:#475569;line-height:1.6">
+          <li>Graphic Design — Logos, banners, social posts</li>
+          <li>Photo Editing — Retouching & ecommerce prep</li>
+          <li>Video Editing — Reels, promos, short ads</li>
+          <li>Ad Creation — Campaign-ready creatives</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="section">
+      <h2 style="margin-bottom:12px">Our Services</h2>
+      <div class="grid">
+        <div class="card"><h3>Graphic Design</h3><p>Brand identities, social posts & banners.</p><p><a href="/services/graphics/">Learn more →</a></p></div>
+        <div class="card"><h3>Photo Editing</h3><p>Retouching, background removal, colour grading.</p><p><a href="/services/photo-editing/">Learn more →</a></p></div>
+        <div class="card"><h3>Video Editing</h3><p>Short ads, intros, mobile-first edits.</p><p><a href="/services/video-editing/">Learn more →</a></p></div>
+        <div class="card"><h3>Ad Creation</h3><p>High-conversion static + short video ads.</p><p><a href="/services/ad-creation/">Learn more →</a></p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <strong>EemmPaTECH Empire</strong> — Creativity meets Technology</p>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/share/16E2cDZkqj/" class="facebook" target="_blank" aria-label="Facebook">f</a>
+        <a href="https://www.instagram.com/eemmpatec?igsh=MWpsYWhzcHFxMW9ibw==" class="instagram" target="_blank" aria-label="Instagram">i</a>
+        <a href="https://x.com/EmmaPauly33100?s=09" class="twitter" target="_blank" aria-label="Twitter/X">x</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
