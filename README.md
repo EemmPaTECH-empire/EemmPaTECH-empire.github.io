@@ -1,10 +1,4 @@
-EemmPaTECH-empire.github.io/
-│
-├─ index.html        ← Complete website code (with brand SVG social icons)
-├─ style.css         ← Optional: move all <style> into this file
-├─ assets/           ← Folder for images, logos, videos
-│   └─ logo.png
-└─ README.md<!DOCTYPE html>
+index.html
 <html lang="en">
 <head>
   <meta charset="UTF-8">
