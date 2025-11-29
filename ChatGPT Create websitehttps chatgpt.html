@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Configuration (edit only if you know what you're doing)
+OWNER="EemmPaTECH-empire"
+REPO_NAME="EemmPaTECH-empire.github.io"
+SSH_URL="git@github.com:${OWNER}/${REPO_NAME}.git"
+HTTPS_URL="https://github.com/${OWNER}/${REPO_NAME}.git"
+FILE_PATH="ChatGPT Create websitehttps chatgpt.html"   # file path exactly as in repo (spaces allowed)
+DEFAULT_BRANCH="MAIN"
+
+# Helpers
+die(){ echo "ERROR: $*"; exit 1; }
+info(){ echo "==> $*"; }
+
+# Ask for confirmation
+echo "GitHub repository: ${OWNER}/${REPO_NAME}"
+echo "File to remove from history: '${FILE_PATH}'"
+echo
+read -r -p "Perform destructive history rewrite to permanently remove that file? This will rewrite history. Have you backed up the repo? (yes/no) " CONFIRM
+if [[ "${CONFIRM}" != "yes" ]]; then
+  die "Aborted by user. Say 'yes' to proceed after making a backup."
+fi
+
+# Choose clone URL
+echo
+read -r -p "Use SSH or HTTPS to clone? (ssh/https) [ssh] " CLONE_METHOD
+CLONE_METHOD=${CLONE_METHOD:-ssh}
+if [[ "$CLONE_METHOD" == "https" ]]; then
+  CLONE_URL="$HTTPS_URL"
+else
+  CLONE_URL="$SSH_URL"
+fi
+
+# Choose scope: all refs (branches+tags) or single branch
+echo
+read -r -p "Remove file from (a)ll refs (branches+tags) or only a (b)ranch? [a/b] " SCOPE
+SCOPE=${SCOPE:-a}
+if [[ "$SCOPE" != "a" && "$SCOPE" != "b" ]]; then
+  die "Invalid choice."
+fi
+if [[ "$SCOPE" == "b" ]]; then
+  read -r -p "Branch to rewrite (default: ${DEFAULT_BRANCH}): " TARGET_BRANCH
+  TARGET_BRANCH=${TARGET_BRANCH:-$DEFAULT_BRANCH}
+fi
+
+# Create work dir
+WORKDIR="$(mktemp -d 2>/dev/null || mktemp -d -t remove-file)"
+trap 'echo "Cleaning up ${WORKDIR}"; rm -rf "${WORKDIR}"' EXIT
+
+cd "${WORKDIR}"
+info "Working in ${WORKDIR}"
+
+# Clone --mirror
+info "Cloning a mirror of the repository..."
+git clone --mirror "${CLONE_URL}" repo.git
+cd repo.git
+
+# Backup mirror just in case
+BACKUP="../${REPO_NAME}-backup-$(date +%Y%m%dT%H%M%S).tar.gz"
+info "Creating tar.gz backup of mirror at ${BACKUP} (recommended)..."
+tar -czf "${BACKUP}" .
+
+# Check git-filter-repo
+if ! command -v git-filter-repo >/dev/null 2>&1; then
+  echo
+  echo "git-filter-repo is not installed or not on PATH."
+  read -r -p "Try to install using 'python3 -m pip install --user git-filter-repo'? (yes/no) " INSTALL_YN
+  if [[ "${INSTALL_YN}" == "yes" ]]; then
+    python3 -m pip install --user git-filter-repo
+    # add ~/.local/bin to PATH for this run if exists
+    if [[ -d "${HOME}/.local/bin" ]]; then
+      export PATH="${HOME}/.local/bin:${PATH}"
+    fi
+    if ! command -v git-filter-repo >/dev/null 2>&1; then
+      die "git-filter-repo still not found after installation. Install manually: https://github.com/newren/git-filter-repo"
+    fi
+  else
+    die "Please install git-filter-repo before running this script. See: https://github.com/newren/git-filter-repo"
+  fi
+fi
+
+# Run git-filter-repo
+info "About to run git-filter-repo to remove '${FILE_PATH}'"
+echo "This modifies refs in this local mirror only. You will be prompted before pushing to GitHub."
+read -r -p "Continue? (yes/no) " CONT2
+if [[ "${CONT2}" != "yes" ]]; then
+  die "Aborted by user."
+fi
+
+if [[ "$SCOPE" == "a" ]]; then
+  info "Removing path from all refs (branches + tags)..."
+  # Use --invert-paths with --path; note spaces are allowed; pass as argument
+  git filter-repo --invert-paths --path "${FILE_PATH}"
+else
+  info "Removing path from branch ${TARGET_BRANCH} only..."
+  # Ensure branch exists in mirror
+  if ! git rev-parse --verify "refs/heads/${TARGET_BRANCH}" >/dev/null 2>&1; then
+    die "Branch refs/heads/${TARGET_BRANCH} not found in mirror. Check branch name and try again."
+  fi
+  git filter-repo --refs "refs/heads/${TARGET_BRANCH}" --invert-paths --path "${FILE_PATH}"
+fi
+
+info "git-filter-repo completed. Local history rewritten."
+
+# Optional aggressive cleanup locally
+info "Cleaning up local repo to free space..."
+git reflog expire --expire=now --all || true
+git gc --prune=now --aggressive || true
+
+# Final confirmation before push
+echo
+echo "Ready to push rewritten history back to GitHub."
+cat <<EOF
+
+WARNING:
+- Pushing will overwrite history on the remote.
+- All collaborators must reclone after this. Forks/old clones may still contain the file.
+EOF
+
+read -r -p "Force-push the rewritten history to remote ${CLONE_URL}? This is destructive. Type 'push' to proceed: " PUSH_CONFIRM
+if [[ "${PUSH_CONFIRM}" != "push" ]]; then
+  die "Push aborted. The cleaned mirror is available in ${WORKDIR}/repo.git and backup is ${BACKUP}."
+fi
+
+# Set origin and push
+git remote set-url origin "${CLONE_URL}"
+if [[ "$SCOPE" == "a" ]]; then
+  info "Force-pushing all refs (mirror) to origin..."
+  git push --force --mirror origin
+else
+  info "Force-pushing rewritten branch ${TARGET_BRANCH} only..."
+  git push --force origin "refs/heads/${TARGET_BRANCH}:refs/heads/${TARGET_BRANCH}"
+fi
+
+info "Push complete."
+
+# Verification suggestions
+echo
+info "Verification commands you can run locally (or run now in a fresh clone):"
+echo "  # clone fresh and search for the filename"
+echo "  git clone --mirror \"${CLONE_URL}\" temp-check.git && cd temp-check.git"
+echo "  git log --all --pretty=format: --name-only | grep -i \"ChatGPT Create\" || echo 'No matching paths'"
+echo
+info "If you need GitHub to remove caches or backups, open a ticket with GitHub Support and reference the repository and file path."
+info "Done. Backup: ${BACKUP}"
