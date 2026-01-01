@@ -95,3 +95,9 @@ a:hover {
     width: 140px;
   }
 }
+.logo {
+  width: 120px;
+  height: auto;
+  display: block;
+  margin: 0 auto 15px;
+}
