@@ -75,22 +75,3 @@ a {
 a:hover {
   color: #ffd700;          /* bright gold */
 }
-/* ===== LOGO + HEADER STYLING ===== */
-.site-header {
-  text-align: center;
-  padding: 30px 20px;
-}
-
-.site-logo {
-  width: 180px;
-  max-width: 90%;
-  height: auto;
-  margin-bottom: 15px;
-  filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.7)); /* gold glow */
-}
-
-/* Mobile optimization */
-@media (max-width: 600px) {
-  .site-logo {
-    width: 140px;
-  }
